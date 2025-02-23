@@ -1,2 +1,2 @@
-# faculc
-aulas em c facul
+# UEMA
+Algumas aulas em c da facul
