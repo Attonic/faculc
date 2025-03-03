@@ -106,6 +106,8 @@ int realizarVendas(Cliente cli[], Produto prod[], Venda vend[], int qtdCli, int 
         } else {
            printf("Quant. ZERO!");
         }
+     }else if(achouCli == 0 || achouProd == 0){
+        printf("\n\nCliente ou Produto não encontrado\nVerifique os codigos");
      }
      return 0;
 }
@@ -144,28 +146,16 @@ void alterarEstoque(Produto prod[], int qtdProd){
     }
         int qtdAlteraProd = 0;
     if (achouProd == 1){
-        int op = 0;
-        printf("1 - Adicionar, 2 - Remover: ");
-        scanf("%d", &op);
-            if(op == 1){
-                printf("Quantidade Desejada adicionar: ");
-                scanf("%d", &qtdAlteraProd);
-                prod[indiceDoProduto].quantidade = qtdAlteraProd;
-            }else if(op == 2){
-                printf("Quantidade desejada remover: ");
-                scanf("%d", &qtdAlteraProd);
-                prod[indiceDoProduto].quantidade = qtdAlteraProd;
-                         
-            }else{
-                    printf("Opcao invalida!");
-            }
-    }else{
+        printf("Atual quantidade do produto: %d\n", prod[indiceDoProduto].quantidade);
+        printf("Digite a nova quantidade: ");
+        scanf("%d", &qtdAlteraProd);
+        prod[indiceDoProduto].quantidade = qtdAlteraProd;   
+        printf("Quantidade modificada para: %d\n", prod[indiceDoProduto].quantidade);
+    } else {
         printf("Produto não encontrado: ");
     }
-        
-    }
     
-
+}
 
 
 // darDescontoNoProduto(){
@@ -194,6 +184,8 @@ int main() {
         printf("\n\t5 - Vender");
         printf("\n\t6 - Consultar Vendas");
         printf("\n\t7 - Alterar Estoque");
+        printf("\n\t8 - Aplicar Desconto 5%%");
+        printf("\n\t9 - Consultar Venda por CLiente");
         printf("\n\t10 - Sair\n\t>>>> ");
         scanf("%d", &opcao);
 
@@ -236,13 +228,11 @@ int main() {
             printf("\n\t\tVendas ja realizadas: %d\n", quantVendasRealizadas);
             int vendaFoiRealizada = realizarVendas(clientes, produtos,
                                     vendas, quantClientes, quantProd, quantVendasRealizadas);
-            if ( vendaFoiRealizada == 1 ) {
-
-                quantVendasRealizadas++;
-
-            } else {
-                printf("\n\nVenda nao realizada... !");
-            }
+                if ( vendaFoiRealizada == 1 ) {
+                    quantVendasRealizadas++;
+                } else {
+                    printf("\n\nVenda nao realizada... !");
+                }
             break;
 
         case 6:
@@ -282,5 +272,6 @@ int main() {
 
     return 0;
 }
+
 
 
