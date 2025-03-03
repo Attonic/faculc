@@ -1,2 +1,2 @@
 # faculc
-aulas em c facul
+Algumas aulas da facul, em C.
