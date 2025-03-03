@@ -42,6 +42,7 @@ void cadastrarProduto (Produto p[], int  qtdProd) {
      scanf("%f", &p[qtdProd].valor);
      p[qtdProd].id = qtdProd+1;
 }
+
 //Consultar Cliente
 void consultarCliente (Cliente c[],  int qtdCli) {
     for(int i=0; i < qtdCli; i++) {
@@ -61,6 +62,31 @@ void consultarProduto (Produto p[], int qtdProd) {
     printf("\n\n");
 }
 
+//Função de desconto
+float darDescontoNoProduto(float valorTotal){
+    if (valorTotal >= 100){
+        int op;
+        printf("Adicionar desconto de 5%%: Sim = 1, Nao = 2: ");
+        scanf("%d", &op);
+
+        switch(op){
+           case 1:
+                valorTotal *= 0.95; // Aplica 5% de desconto
+                printf("Desconto feito, novo valor: %.2f\n", valorTotal);
+                break;
+            case 2:
+                printf("Não aplicado desconto. Valor total: %.2f\n", valorTotal);
+                break;
+            default:
+                printf("Opcao invalida nao aplicado desconto.\n");
+                break;
+        }
+    }
+    return valorTotal;
+
+ }
+
+//Realizar a venda
 int realizarVendas(Cliente cli[], Produto prod[], Venda vend[], int qtdCli, int qtdProd, int qtdDeVendas) {
      int codCli, achouCli=0;
      printf("\nCodigo do Cliente: ");
@@ -86,12 +112,15 @@ int realizarVendas(Cliente cli[], Produto prod[], Venda vend[], int qtdCli, int 
         scanf("%d", &quantProd);
 
         if ( quantProd > 0 ) {
-             if ( quantProd <= prod[indiceProd].quantidade) {
+             if (quantProd > 0 && quantProd <= prod[indiceProd].quantidade) {
+                float valorTotal = quantProd * prod[indiceProd].valor;
+                valorTotal = darDescontoNoProduto(valorTotal);
+
                 if ( qtdDeVendas < TAMVend) {
                     vend[qtdDeVendas].idCliente = codCli;
                     vend[qtdDeVendas].idProduto = codProd;
                     vend[qtdDeVendas].quantProduto = quantProd;
-                    vend[qtdDeVendas].valorTotal = (quantProd * prod[indiceProd].valor);
+                    vend[qtdDeVendas].valorTotal = valorTotal;
 
                     prod[indiceProd].quantidade = prod[indiceProd].quantidade - quantProd;
                     printf("\n\nVenda Realizada com Sucesso!");
@@ -106,16 +135,18 @@ int realizarVendas(Cliente cli[], Produto prod[], Venda vend[], int qtdCli, int 
         } else {
            printf("Quant. ZERO!");
         }
+     //Verificação adicionada   
      }else if(achouCli == 0 || achouProd == 0){
-        printf("\n\nCliente ou Produto não encontrado\nVerifique os codigos");
+        printf("\n\nCliente ou Produto nao encontrado\nVerifique os codigos");
      }
      return 0;
 }
 //Consultar vendas
-void consultarVendas(Venda vend[], int qtdVendas) {
+//Adcionado nome do cliente aparecer
+void consultarVendas(Venda vend[], Cliente c[], int qtdVendas) {
    printf("\n>>>> Vendas <<<< ");
    for (int i=0; i < qtdVendas; i++) {
-        printf("\n%d. cliente=%d | produto=%d | quantProd=%d | valorTotal = %.2f |",(i+1),(vend[i].idCliente),vend[i].idProduto,vend[i].quantProduto,vend[i].valorTotal );
+        printf("\n%d. cliente=%d Nome: %s | produto=%d | quantProd=%d | valorTotal = %.2f |",(i+1),(vend[i].idCliente), c[i].nome,vend[i].idProduto,vend[i].quantProduto,vend[i].valorTotal );
    }
 }
 
@@ -158,9 +189,6 @@ void alterarEstoque(Produto prod[], int qtdProd){
 }
 
 
-// darDescontoNoProduto(){
-
-// }
 
 // exibirVendasPorCliente(){
 
@@ -237,7 +265,7 @@ int main() {
 
         case 6:
             if ( quantVendasRealizadas > 0) {
-                consultarVendas(vendas, quantVendasRealizadas);
+                consultarVendas(vendas, clientes, quantVendasRealizadas);
             } else {
                 printf("\n\nNenhuma venda realizada... !");
             }
