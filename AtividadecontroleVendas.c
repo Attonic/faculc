@@ -133,7 +133,7 @@ int contarProdutosComUmItem(Produto prod[], int qtdProd) {
 //Alterar estoque !
 void alterarEstoque(Produto prod[], int qtdProd){
     int idProd = 0, achouProd = 0;
-    printf("Digite o codigo do produto");
+    printf("Digite o codigo do produto:");
     scanf("%d", &idProd);
     int indiceDoProduto;
     for(int i = 0; i < qtdProd; i++){
@@ -144,29 +144,37 @@ void alterarEstoque(Produto prod[], int qtdProd){
     }
         int qtdAlteraProd = 0;
     if (achouProd == 1){
-        int op = 0, remover = 0;
-        printf("1 - Adicionar, 2 - Remover");
-        switch (op != 0)
-        {
-        case constant expression:
-            /* code */
-            break;
+        int op = 0;
+        printf("1 - Adicionar, 2 - Remover: ");
+        scanf("%d", &op);
+            if(op == 1){
+                printf("Quantidade Desejada adicionar: ");
+                scanf("%d", &qtdAlteraProd);
+                prod[indiceDoProduto].quantidade = qtdAlteraProd;
+            }else if(op == 2){
+                printf("Quantidade desejada remover: ");
+                scanf("%d", &qtdAlteraProd);
+                prod[indiceDoProduto].quantidade = qtdAlteraProd;
+                         
+            }else{
+                    printf("Opcao invalida!");
+            }
+    }else{
+        printf("Produto não encontrado: ");
+    }
         
-        default:
-            break;
-        }
     }
     
 
-}
 
-darDescontoNoProduto(){
 
-}
+// darDescontoNoProduto(){
 
-exibirVendasPorCliente(){
+// }
 
-}
+// exibirVendasPorCliente(){
+
+// }
 
 int main() {
     int opcao, sair=0; // sair inicialmente falso
@@ -185,35 +193,46 @@ int main() {
         printf("\n\t4 - Consultar Produtos");
         printf("\n\t5 - Vender");
         printf("\n\t6 - Consultar Vendas");
-        printf("\n\t7 - Sair\n\t>>>> ");
+        printf("\n\t7 - Alterar Estoque");
+        printf("\n\t10 - Sair\n\t>>>> ");
         scanf("%d", &opcao);
-        if ( opcao == 1) {
+
+        switch (opcao){
+        case 1:
             if (quantClientes < TAMCli) {
                 cadastrarCliente(clientes, quantClientes);
                 quantClientes++;
             } else {
                 printf("\n\nNao ha mais espaco!!!");
             }
-        } else if ( opcao == 2 ) {
+            break;
+            
+        case 2:
             if (quantProd < TAMProd) {
                 cadastrarProduto(produtos, quantProd);
                 quantProd++;
             } else {
                 printf("\n\nNao ha mais espaco!!!");
             }
-        } else if ( opcao == 3 ) {
+            break;
+
+        case 3:
             if (quantClientes > 0) {
-               consultarCliente(clientes, quantClientes);
+                consultarCliente(clientes, quantClientes);
             } else {
-               printf("\n\nNao ha clientes!");
+                printf("\n\nNao ha clientes!");
             }
-        } else if ( opcao == 4 ) {
+            break;
+
+        case 4:
             if (quantProd > 0) {
-               consultarProduto(produtos, quantProd);
+                consultarProduto(produtos, quantProd);
             } else {
-               printf("\n\nNao ha produtos!");
+                printf("\n\nNao ha produtos!");
             }
-        } else if ( opcao == 5 ) {
+            break;
+            
+        case 5:
             printf("\n\t\tVendas ja realizadas: %d\n", quantVendasRealizadas);
             int vendaFoiRealizada = realizarVendas(clientes, produtos,
                                     vendas, quantClientes, quantProd, quantVendasRealizadas);
@@ -224,17 +243,41 @@ int main() {
             } else {
                 printf("\n\nVenda nao realizada... !");
             }
-        } else if ( opcao == 6 ) {
+            break;
+
+        case 6:
             if ( quantVendasRealizadas > 0) {
-               consultarVendas(&vendas, quantVendasRealizadas);
+                consultarVendas(vendas, quantVendasRealizadas);
             } else {
-               printf("\n\nNenhuma venda realizada... !");
+                printf("\n\nNenhuma venda realizada... !");
             }
-        } else if ( opcao == 7 ) {
+            break;
+
+        case 7:
+            if(quantProd > 0){
+                alterarEstoque(produtos, quantProd);
+            }else{
+                printf("\n\nEstoque Zerado... !");
+            }
+            break;
+
+        case 8:
+
+            break;
+
+        case 9:
+            
+            break;
+
+        case 10:
             sair = 1;
-        } else {
+            break;
+
+        default: 
             printf("\n\nOpcao Invalida!");
+            break;
         }
+
     } while ( sair != 1 );
 
     return 0;
