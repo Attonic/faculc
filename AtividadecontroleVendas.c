@@ -26,28 +26,30 @@ typedef struct {
     float valorTotal;
 }Venda;
 
-//Cadastro de cliente
+//###-Cadastro de cliente
 void cadastrarCliente (Cliente c[], int qtdCli) {
      printf("Cliente %d, Primeiro Nome: ",  qtdCli+1);
      scanf("%s", c[qtdCli].nome );
      c[qtdCli].id = qtdCli+1;
 }
-//Cadastro de Produtos
+
+//###-Cadastro de Produtos
 void cadastrarProduto (Produto p[], int  qtdProd) {
      printf("\nPrimeiro Nome do Produto %d: ", qtdProd+1);
-     scanf("%s", p[qtdProd].nome );
+        scanf("%s", p[qtdProd].nome );
      printf("Quantidade: ");
-     scanf("%d", &p[qtdProd].quantidade);
+        scanf("%d", &p[qtdProd].quantidade);
      printf("Valor: ");
-     scanf("%f", &p[qtdProd].valor);
+        scanf("%f", &p[qtdProd].valor);
      p[qtdProd].id = qtdProd+1;
 }
 
-//Consultar Cliente
+//###-Consultar Cliente
 void consultarCliente (Cliente c[],  int qtdCli) {
     for(int i=0; i < qtdCli; i++) {
         printf("\nId Cliente: %d.",  c[i].id);
         printf("\nPrimeiro Nome: %s.",  c[i].nome);
+        printf("\n----------------------------------");
     }
     printf("\n\n");
 }
@@ -62,12 +64,12 @@ void consultarProduto (Produto p[], int qtdProd) {
     printf("\n\n");
 }
 
-//Função de desconto
+//###-Função de desconto
 float darDescontoNoProduto(float valorTotal){
     if (valorTotal >= 100){
         int op;
         printf("Adicionar desconto de 5%%: Sim = 1, Nao = 2: ");
-        scanf("%d", &op);
+            scanf("%d", &op);
 
         switch(op){
            case 1:
@@ -86,9 +88,9 @@ float darDescontoNoProduto(float valorTotal){
 
  }
 
- //Consultar venda pelo cliente
+//###-Consultar venda pelo cliente
  void exibirVendasPorCliente(Venda venda[], int qtdVendas){
-    int codCli, vendaIndicee = 0, achouVenda = 0, vendasEncontradas = 0;
+    int codCli, vendasEncontradas = 0;
     printf("\nCodigo do Cliente: ");
     scanf("%d", &codCli);
 
@@ -96,22 +98,18 @@ float darDescontoNoProduto(float valorTotal){
         for (int v = 0; v < qtdVendas; v++) {
 
             if ( venda[v].idCliente == codCli) {
-                achouVenda = 1;
                 vendasEncontradas++;
-                vendaIndicee = v;
-            }
-
-            if (achouVenda == 1){
                 printf("Venda %d: Produto=%d | Quantidade=%d | Valor Total=%.2f\n",
-                    (vendasEncontradas + 1), venda[vendaIndicee].idProduto, venda[vendaIndicee].quantProduto, venda[vendaIndicee].valorTotal);
-            }
-            
-                
-         }
+                (vendasEncontradas), venda[v].idProduto, venda[v].quantProduto, venda[v].valorTotal); 
+            }        
+        }
+        if(vendasEncontradas == 0){
+            printf("Nao ha venda para este cliente ID: %d\n", codCli);
+        }
 
  }
 
-//Realizar a venda
+//###-Realizar a venda
 int realizarVendas(Cliente cli[], Produto prod[], Venda vend[], int qtdCli, int qtdProd, int qtdDeVendas) {
      int codCli, achouCli=0;
      printf("\nCodigo do Cliente: ");
@@ -161,13 +159,13 @@ int realizarVendas(Cliente cli[], Produto prod[], Venda vend[], int qtdCli, int 
            printf("Quant. ZERO!");
         }
      //Verificação adicionada   
-     }else if(achouCli == 0 || achouProd == 0){
+    }else if(achouCli == 0 || achouProd == 0){
         printf("\n\nCliente ou Produto nao encontrado\nVerifique os codigos");
-     }
-     return 0;
+    }
+    return 0;
 }
-//Consultar vendas
 
+//###-Consultar vendas
 void consultarVendas(Venda vend[], int qtdVendas) {
    printf("\n>>>> Vendas <<<< ");
    for (int i=0; i < qtdVendas; i++) {
@@ -175,7 +173,7 @@ void consultarVendas(Venda vend[], int qtdVendas) {
    }
 }
 
-//Contador produtos
+//###-Contador produtos
 int contarProdutosComUmItem(Produto prod[], int qtdProd) {
    int quantProdUmItem=0;
    for (int i=0; i < qtdProd; i++) {
@@ -186,12 +184,12 @@ int contarProdutosComUmItem(Produto prod[], int qtdProd) {
    return quantProdUmItem;
 }
 
-
 //Implementei aqui espero que dê certo kk
-//Alterar estoque !
+
+//###-Alterar estoque !
 void alterarEstoque(Produto prod[], int qtdProd){
     int idProd = 0, achouProd = 0;
-    printf("Digite o codigo do produto:");
+    printf("Digite o codigo do produto: ");
     scanf("%d", &idProd);
     int indiceDoProduto;
     for(int i = 0; i < qtdProd; i++){
@@ -213,15 +211,14 @@ void alterarEstoque(Produto prod[], int qtdProd){
     
 }
 
-
-
+//##-Main
 int main() {
     int opcao, sair=0; // sair inicialmente falso
     Cliente clientes[TAMCli];
     Produto produtos[TAMProd];
     Venda   vendas[TAMVend];
 
-    //usadas como indices  nos vetores. Isto �, controla o armazenamentos
+//usadas como indices  nos vetores. Isto, controla o armazenamentos
     int quantVendasRealizadas=0, quantClientes=0, quantProd=0;
 
     do {
@@ -238,7 +235,7 @@ int main() {
         scanf("%d", &opcao);
 
         switch (opcao){
-
+    //Cadastrar Clientes
         case 1:
             if (quantClientes < TAMCli) {
                 cadastrarCliente(clientes, quantClientes);
@@ -247,7 +244,7 @@ int main() {
                 printf("\n\nNao ha mais espaco!!!");
             }
             break;
-            
+    //Cadastrar Produtos        
         case 2:
             if (quantProd < TAMProd) {
                 cadastrarProduto(produtos, quantProd);
@@ -256,7 +253,7 @@ int main() {
                 printf("\n\nNao ha mais espaco!!!");
             }
             break;
-
+    //Consultar Clientes        
         case 3:
             if (quantClientes > 0) {
                 consultarCliente(clientes, quantClientes);
@@ -264,7 +261,7 @@ int main() {
                 printf("\n\nNao ha clientes!");
             }
             break;
-
+    //Consultar Produtos        
         case 4:
             if (quantProd > 0) {
                 consultarProduto(produtos, quantProd);
@@ -272,7 +269,7 @@ int main() {
                 printf("\n\nNao ha produtos!");
             }
             break;
-            
+    //Vender        
         case 5:
             printf("\n\t\tVendas ja realizadas: %d\n", quantVendasRealizadas);
             int vendaFoiRealizada = realizarVendas(clientes, produtos,
@@ -283,7 +280,7 @@ int main() {
                     printf("\n\nVenda nao realizada... !");
                 }
             break;
-        //Consultar Vendas
+    //Consultar Vendas
         case 6:
             if ( quantVendasRealizadas > 0) {
                 consultarVendas(vendas, quantVendasRealizadas);
@@ -291,7 +288,7 @@ int main() {
                 printf("\n\nNenhuma venda realizada... !");
             }
             break;
-
+    //Alterar Estoque        
         case 7:
             if(quantProd > 0){
                 alterarEstoque(produtos, quantProd);
@@ -299,15 +296,15 @@ int main() {
                 printf("\n\nEstoque Zerado... !");
             }
             break;
-        //Consultar Venda por Cliente    
+    //Consultar Venda por Cliente    
         case 8:
             if (quantClientes > 0 && quantVendasRealizadas > 0) {
                 exibirVendasPorCliente(vendas, quantVendasRealizadas);
             } else {
-                printf("\n\nNao ha clientes ou Não ha vendas!");
+                printf("\n\nNao ha clientes ou Nao ha vendas!");
             }
             break;
-
+    //sair        
         case 9:
             sair = 1;
             break;
