@@ -86,6 +86,31 @@ float darDescontoNoProduto(float valorTotal){
 
  }
 
+ //Consultar venda pelo cliente
+ void exibirVendasPorCliente(Venda venda[], int qtdVendas){
+    int codCli, vendaIndicee = 0, achouVenda = 0, vendasEncontradas = 0;
+    printf("\nCodigo do Cliente: ");
+    scanf("%d", &codCli);
+
+        printf("\nVendas do Cliente ID %d:\n", codCli);
+        for (int v = 0; v < qtdVendas; v++) {
+
+            if ( venda[v].idCliente == codCli) {
+                achouVenda = 1;
+                vendasEncontradas++;
+                vendaIndicee = v;
+            }
+
+            if (achouVenda == 1){
+                printf("Venda %d: Produto=%d | Quantidade=%d | Valor Total=%.2f\n",
+                    (vendasEncontradas + 1), venda[vendaIndicee].idProduto, venda[vendaIndicee].quantProduto, venda[vendaIndicee].valorTotal);
+            }
+            
+                
+         }
+
+ }
+
 //Realizar a venda
 int realizarVendas(Cliente cli[], Produto prod[], Venda vend[], int qtdCli, int qtdProd, int qtdDeVendas) {
      int codCli, achouCli=0;
@@ -142,11 +167,11 @@ int realizarVendas(Cliente cli[], Produto prod[], Venda vend[], int qtdCli, int 
      return 0;
 }
 //Consultar vendas
-//Adcionado nome do cliente aparecer
-void consultarVendas(Venda vend[], Cliente c[], int qtdVendas) {
+
+void consultarVendas(Venda vend[], int qtdVendas) {
    printf("\n>>>> Vendas <<<< ");
    for (int i=0; i < qtdVendas; i++) {
-        printf("\n%d. cliente=%d Nome: %s | produto=%d | quantProd=%d | valorTotal = %.2f |",(i+1),(vend[i].idCliente), c[i].nome,vend[i].idProduto,vend[i].quantProduto,vend[i].valorTotal );
+        printf("\n%d. cliente=%d | produto=%d | quantProd=%d | valorTotal = %.2f |",(i+1),(vend[i].idCliente),vend[i].idProduto,vend[i].quantProduto,vend[i].valorTotal );
    }
 }
 
@@ -190,10 +215,6 @@ void alterarEstoque(Produto prod[], int qtdProd){
 
 
 
-// exibirVendasPorCliente(){
-
-// }
-
 int main() {
     int opcao, sair=0; // sair inicialmente falso
     Cliente clientes[TAMCli];
@@ -212,12 +233,12 @@ int main() {
         printf("\n\t5 - Vender");
         printf("\n\t6 - Consultar Vendas");
         printf("\n\t7 - Alterar Estoque");
-        printf("\n\t8 - Aplicar Desconto 5%%");
-        printf("\n\t9 - Consultar Venda por CLiente");
-        printf("\n\t10 - Sair\n\t>>>> ");
+        printf("\n\t8 - Consultar Venda por Cliente");
+        printf("\n\t9 - Sair\n\t>>>> ");
         scanf("%d", &opcao);
 
         switch (opcao){
+
         case 1:
             if (quantClientes < TAMCli) {
                 cadastrarCliente(clientes, quantClientes);
@@ -262,10 +283,10 @@ int main() {
                     printf("\n\nVenda nao realizada... !");
                 }
             break;
-
+        //Consultar Vendas
         case 6:
             if ( quantVendasRealizadas > 0) {
-                consultarVendas(vendas, clientes, quantVendasRealizadas);
+                consultarVendas(vendas, quantVendasRealizadas);
             } else {
                 printf("\n\nNenhuma venda realizada... !");
             }
@@ -278,16 +299,16 @@ int main() {
                 printf("\n\nEstoque Zerado... !");
             }
             break;
-
+        //Consultar Venda por Cliente    
         case 8:
-
+            if (quantClientes > 0 && quantVendasRealizadas > 0) {
+                exibirVendasPorCliente(vendas, quantVendasRealizadas);
+            } else {
+                printf("\n\nNao ha clientes ou Não ha vendas!");
+            }
             break;
 
         case 9:
-            
-            break;
-
-        case 10:
             sair = 1;
             break;
 
