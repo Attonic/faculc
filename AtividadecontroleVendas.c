@@ -1,6 +1,7 @@
 
 //Antonio Cleison Alves Silva
 //Adcionei alguns comentarios para não me perder.
+//Este codigo eesta sendo versionado no git hub desde do dia 3/04
 
 #include <stdio.h>
 #define TAMCli 5
@@ -27,10 +28,10 @@ typedef struct {
 }Venda;
 
 //###-Cadastro de cliente
-void cadastrarCliente (Cliente c[], int qtdCli) {
+void cadastrarCliente (Cliente cle[], int qtdCli) {
      printf("Cliente %d, Primeiro Nome: ",  qtdCli+1);
-     scanf("%s", c[qtdCli].nome );
-     c[qtdCli].id = qtdCli+1;
+     scanf("%s", cle[qtdCli].nome );
+     cle[qtdCli].id = qtdCli+1;
 }
 
 //###-Cadastro de Produtos
@@ -211,14 +212,14 @@ void alterarEstoque(Produto prod[], int qtdProd){
     
 }
 
-//##-Main
+//##-Main (Cleison)
 int main() {
-    int opcao, sair=0; // sair inicialmente falso
+    int opcao, sair=0; // sair inicialmente falso 
     Cliente clientes[TAMCli];
     Produto produtos[TAMProd];
     Venda   vendas[TAMVend];
 
-//usadas como indices  nos vetores. Isto, controla o armazenamentos
+//usadas como indices  nos vetores. Isto, controla o armazenamentos (Cle)
     int quantVendasRealizadas=0, quantClientes=0, quantProd=0;
 
     do {
@@ -227,7 +228,7 @@ int main() {
         printf("\n\t2 - Cadastrar Produtos");
         printf("\n\t3 - Consultar Clientes");
         printf("\n\t4 - Consultar Produtos");
-        printf("\n\t5 - Vender");
+        printf("\n\t5 - Vender");//(Cle)
         printf("\n\t6 - Consultar Vendas");
         printf("\n\t7 - Alterar Estoque");
         printf("\n\t8 - Consultar Venda por Cliente");
@@ -292,7 +293,7 @@ int main() {
         case 7:
             if(quantProd > 0){
                 alterarEstoque(produtos, quantProd);
-            }else{
+            }else{//(Cleison)
                 printf("\n\nEstoque Zerado... !");
             }
             break;
@@ -319,5 +320,5 @@ int main() {
     return 0;
 }
 
-
+//Antonio Cleison
 
